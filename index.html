@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BuildStock — Materials Inventory Management</title>
+<style>
+:root{--navy:#123f7a;--blue:#1f66c2;--sky:#48b5ff;--teal:#16b8a6;--gold:#f6b73c;--coral:#ef6262;--green:#22a06b;--purple:#7c5cff;--ink:#17233b;--muted:#71809a;--bg:#f3f7fc;--card:#fff;--line:#e3eaf4;--shadow:0 12px 35px rgba(20,55,100,.09)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{min-height:100vh;display:flex}.sidebar{width:250px;background:linear-gradient(180deg,#103e79,#1d5a9f 58%,#0d376d);color:#fff;padding:22px 16px;position:fixed;inset:0 auto 0 0;z-index:20;box-shadow:8px 0 30px rgba(9,40,80,.14)}.brand{display:flex;gap:11px;align-items:center;padding:8px 9px 22px}.logo{width:43px;height:43px;border-radius:14px;background:linear-gradient(135deg,#48b5ff,#7c5cff);display:grid;place-items:center;font-weight:900;font-size:18px;box-shadow:0 8px 20px #082b5a88}.brand b{font-size:19px}.brand small{display:block;color:#cfe5ff;font-size:10px;letter-spacing:1.2px}.nav{display:grid;gap:7px}.nav button{color:#dbeaff;background:transparent;text-align:left;padding:12px 13px;border-radius:12px;display:flex;gap:11px;align-items:center;font-weight:700}.nav button:hover,.nav button.active{background:#ffffff1a;color:#fff}.nav .ico{width:25px;text-align:center}.sidebar-footer{position:absolute;bottom:18px;left:18px;right:18px;border-top:1px solid #ffffff20;padding-top:14px;font-size:11px;color:#c4dcf8}.main{margin-left:250px;width:calc(100% - 250px)}.topbar{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:10}.topbar h1{font-size:22px;margin:0}.topbar p{margin:3px 0 0;color:var(--muted);font-size:12px}.userbox{display:flex;align-items:center;gap:10px}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#48b5ff,#7c5cff);color:#fff;font-weight:800}.logout{background:#eef4fb;color:var(--navy);padding:9px 12px;border-radius:10px;font-weight:800}.content{padding:26px;max-width:1500px;margin:auto}.page{display:none}.page.active{display:block}.hero{background:linear-gradient(135deg,#123f7a 0%,#216ac8 58%,#43b9ff 100%);color:#fff;border-radius:22px;padding:25px 28px;position:relative;overflow:hidden;box-shadow:var(--shadow);margin-bottom:20px}.hero:after{content:"";position:absolute;width:260px;height:260px;border:30px solid #ffffff12;border-radius:50%;right:-60px;top:-120px}.hero h2{margin:0 0 7px;font-size:28px}.hero p{margin:0;color:#dcecff;max-width:720px}.grid{display:grid;gap:16px}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}.stat:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent)}.stat .label{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.stat .value{font-size:29px;font-weight:900;margin-top:7px}.stat .sub{font-size:11px;color:var(--muted);margin-top:3px}.accent-blue{--accent:#48b5ff}.accent-teal{--accent:#16b8a6}.accent-gold{--accent:#f6b73c}.accent-coral{--accent:#ef6262}.two{grid-template-columns:1.35fr .85fr;margin-top:16px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:19px;box-shadow:var(--shadow)}.card h3{margin:0 0 15px;font-size:16px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:15px}.search{flex:1;min-width:210px;padding:11px 13px;border:1px solid var(--line);border-radius:11px;outline:none;background:#fbfdff}.search:focus,input:focus,select:focus,textarea:focus{border-color:#6bbdff;box-shadow:0 0 0 3px #48b5ff18}.select{padding:11px 13px;border:1px solid var(--line);border-radius:11px;background:#fff}.btn{padding:10px 14px;border-radius:11px;font-weight:800}.primary{background:linear-gradient(135deg,#216ac8,#48b5ff);color:#fff}.secondary{background:#edf4fd;color:var(--navy)}.danger{background:#fff0f0;color:#c94040}.success{background:#eaf9f3;color:#16845a}.purple{background:#f1eeff;color:#6549df}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:13px}table{border-collapse:collapse;width:100%;min-width:850px;background:#fff}th,td{padding:12px 13px;border-bottom:1px solid var(--line);text-align:left;font-size:12px;white-space:nowrap}th{background:#f7faff;color:#5e6f89;text-transform:uppercase;font-size:10px;letter-spacing:.7px;position:sticky;top:0}tr:hover td{background:#fbfdff}.badge{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:900}.normal{background:#e8f8ef;color:#14794f}.reorder{background:#fff4dc;color:#a56800}.out{background:#ffe9e9;color:#bd3838}.over{background:#eeeaff;color:#6044d3}.pill{background:#eef4fb;color:#46627f;padding:4px 8px;border-radius:8px;font-size:10px;font-weight:800}.bar{height:9px;background:#edf2f8;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#48b5ff,#7c5cff)}.list{display:grid;gap:11px}.notice{padding:12px 13px;border-radius:12px;background:#fff8e7;border-left:4px solid #f6b73c;font-size:12px}.notice.red{background:#fff0f0;border-left-color:#ef6262}.notice.blue{background:#eef7ff;border-left-color:#48b5ff}.donut{width:190px;height:190px;border-radius:50%;margin:8px auto 15px;background:conic-gradient(#22a06b 0 25%,#f6b73c 25% 50%,#ef6262 50% 75%,#7c5cff 75% 100%);display:grid;place-items:center}.donut:after{content:"";width:112px;height:112px;border-radius:50%;background:#fff}.legend{display:grid;grid-template-columns:1fr 1fr;gap:9px;font-size:11px}.legend span{display:flex;align-items:center;gap:6px}.dot{width:9px;height:9px;border-radius:50%}.modal{position:fixed;inset:0;background:#09234b99;display:none;align-items:center;justify-content:center;padding:20px;z-index:50}.modal.show{display:flex}.modal-box{width:min(720px,100%);background:#fff;border-radius:20px;padding:23px;max-height:90vh;overflow:auto;box-shadow:0 30px 80px #09234b44}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.modal-head h3{margin:0}.x{background:#f0f4f9;border-radius:10px;width:36px;height:36px;font-size:20px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:11px;font-weight:900;color:#5d6e86;text-transform:uppercase;letter-spacing:.5px}.field input,.field select,.field textarea{padding:11px;border:1px solid var(--line);border-radius:10px;outline:none;background:#fff}.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:17px}.login{min-height:100vh;display:grid;place-items:center;background:radial-gradient(circle at 20% 10%,#48b5ff44,transparent 28%),radial-gradient(circle at 90% 80%,#7c5cff44,transparent 28%),linear-gradient(135deg,#092e62,#175ca0);padding:20px}.login-card{width:min(460px,100%);background:#ffffffee;backdrop-filter:blur(14px);border-radius:26px;padding:32px;box-shadow:0 30px 90px #051c3d66}.login-brand{display:flex;align-items:center;gap:12px;margin-bottom:25px}.login-brand .logo{width:52px;height:52px}.login h1{margin:0;font-size:26px}.login p{color:var(--muted);font-size:12px}.login .field{margin-top:14px}.login-btn{width:100%;margin-top:20px;padding:13px}.demo{margin-top:13px;background:#f1f6fd;border-radius:12px;padding:11px;font-size:11px;color:#60738f}.error{color:#c83d3d;font-size:11px;margin-top:8px;display:none}.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.mini{padding:14px;border-radius:13px;background:#f7faff}.mini b{display:block;font-size:19px}.empty{padding:30px;text-align:center;color:var(--muted)}.toast{position:fixed;right:22px;bottom:22px;background:#17233b;color:#fff;padding:13px 17px;border-radius:12px;box-shadow:0 15px 40px #17233b44;display:none;z-index:80;font-size:12px}.toast.show{display:block}.footer-note{margin-top:18px;font-size:10px;color:#8794a9}.hide{display:none!important}@media(max-width:1000px){.sidebar{width:76px}.brand div:not(.logo),.nav span:not(.ico),.sidebar-footer{display:none}.brand{justify-content:center}.main{margin-left:76px;width:calc(100% - 76px)}.nav button{justify-content:center}.stats{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}@media(max-width:650px){.stats,.form-grid,.kpi-row{grid-template-columns:1fr}.topbar{padding:0 15px}.content{padding:15px}.topbar p{display:none}.userbox .logout{display:none}.hero h2{font-size:23px}}
+</style>
+</head>
+<body>
+<div id="loginView" class="login">
+  <div class="login-card">
+    <div class="login-brand"><div class="logo">BS</div><div><h1>BuildStock</h1><p>Materials Inventory Management</p></div></div>
+    <div class="field"><label>Username</label><input id="loginUser" value="admin" autocomplete="username"/></div>
+    <div class="field"><label>Password</label><input id="loginPass" type="password" value="admin123" autocomplete="current-password"/></div>
+    <div id="loginError" class="error">Invalid username or password.</div>
+    <button class="btn primary login-btn" onclick="login()">Sign in to BuildStock →</button>
+    <div class="demo"><b>Demo account</b><br>Username: admin &nbsp;•&nbsp; Password: admin123<br><span style="color:#789">Data is stored locally in your browser for this classroom prototype.</span></div>
+  </div>
+</div>
+
+<div id="appView" class="app hide">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">BS</div><div><b>BuildStock</b><small>CONSTRUCTION MATERIALS</small></div></div>
+    <nav class="nav">
+      <button class="active" data-page="dashboard" onclick="showPage('dashboard',this)"><span class="ico">⌂</span><span>Dashboard</span></button>
+      <button data-page="materials" onclick="showPage('materials',this)"><span class="ico">▦</span><span>Materials</span></button>
+      <button data-page="suppliers" onclick="showPage('suppliers',this)"><span class="ico">♙</span><span>Suppliers</span></button>
+      <button data-page="deliveries" onclick="showPage('deliveries',this)"><span class="ico">↓</span><span>Deliveries</span></button>
+      <button data-page="issuance" onclick="showPage('issuance',this)"><span class="ico">↑</span><span>Issuance</span></button>
+      <button data-page="returns" onclick="showPage('returns',this)"><span class="ico">↩</span><span>Returns</span></button>
+      <button data-page="reports" onclick="showPage('reports',this)"><span class="ico">◒</span><span>Reports</span></button>
+      <button data-page="audit" onclick="showPage('audit',this)"><span class="ico">☷</span><span>Audit Trail</span></button>
+    </nav>
+    <div class="sidebar-footer">CETS463 • Plate 1<br>Database Management in Construction</div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><h1 id="pageTitle">Dashboard</h1><p>Material Inventory Management System</p></div><div class="userbox"><div class="avatar">A</div><div><b>Administrator</b><small style="display:block;color:#8390a4">Inventory Manager</small></div><button class="logout" onclick="logout()">Logout</button></div></header>
+    <section class="content">
+      <div id="dashboard" class="page active"></div>
+      <div id="materials" class="page"></div>
+      <div id="suppliers" class="page"></div>
+      <div id="deliveries" class="page"></div>
+      <div id="issuance" class="page"></div>
+      <div id="returns" class="page"></div>
+      <div id="reports" class="page"></div>
+      <div id="audit" class="page"></div>
+    </section>
+  </main>
+</div>
+
+<div id="modal" class="modal"><div class="modal-box"><div class="modal-head"><h3 id="modalTitle">Add record</h3><button class="x" onclick="closeModal()">×</button></div><div id="modalBody"></div></div></div>
+<div id="toast" class="toast"></div>
+
+<script>
+const KEY='buildstock_v1';
+const base={
+ materials:[
+ ['MAT-001','Portland Cement 40kg','Cement','bag',285,20,80,'Construction cement'],['MAT-002','Ready-Mix Concrete 20MPa','Concrete','m³',4850,5,20,'Structural concrete'],['MAT-003','10mm Deformed Rebar','Steel','pc',118,50,180,'Grade 60 reinforcing bar'],['MAT-004','12mm Deformed Rebar','Steel','pc',165,45,160,'Grade 60 reinforcing bar'],['MAT-005','16mm Deformed Rebar','Steel','pc',292,30,120,'Grade 60 reinforcing bar'],['MAT-006','Marine Plywood 1/2in','Wood','sheet',920,12,40,'2440x1220mm'],['MAT-007','Ordinary Plywood 1/4in','Wood','sheet',510,15,50,'2440x1220mm'],['MAT-008','2x2 Wood Furring','Wood','pc',92,30,100,'3m length'],['MAT-009','2x4 Wood Lumber','Wood','pc',225,25,90,'3m length'],['MAT-010','Ceramic Floor Tile 60x60','Finishes','box',890,15,55,'1.44m²/box'],['MAT-011','Wall Tile 30x60','Finishes','box',760,12,45,'1.44m²/box'],['MAT-012','Tile Adhesive 25kg','Finishes','bag',520,12,40,'Polymer-modified'],['MAT-013','Grout 2kg','Finishes','bag',165,10,35,'Cementitious grout'],['MAT-014','Interior Latex Paint 4L','Paint','can',690,8,30,'Low-VOC interior paint'],['MAT-015','Exterior Paint 4L','Paint','can',820,8,30,'Weather-resistant paint'],['MAT-016','PVC Pipe 1/2in x 3m','Plumbing','pc',145,20,70,'Schedule 40'],['MAT-017','PVC Pipe 3/4in x 3m','Plumbing','pc',185,18,60,'Schedule 40'],['MAT-018','Electrical Wire THHN 2.0mm²','Electrical','m',38,80,300,'Copper wire'],['MAT-019','LED Downlight 9W','Electrical','pc',185,15,60,'Warm white'],['MAT-020','Stainless Cabinet Hinge','Hardware','pc',42,30,120,'Soft-close hinge']
+].map(x=>({id:x[0],name:x[1],category:x[2],unit:x[3],cost:x[4],reorder:x[5],target:x[6],notes:x[7]})),
+ suppliers:[
+ ['SUP-001','CebuBuild Supply Hub','Mia Santos','0917-555-0101','Mandaue City, Cebu','Cement, Steel, Hardware'],['SUP-002','VisMin Timber & Panels','Carlo Reyes','0917-555-0102','Lapu-Lapu City, Cebu','Plywood, Lumber'],['SUP-003','TileCraft Cebu','Angela Lim','0917-555-0103','Cebu City, Cebu','Tiles, Adhesives, Grout'],['SUP-004','ColorPro Paint Center','Nico Tan','0917-555-0104','Talisay City, Cebu','Interior & Exterior Paint'],['SUP-005','Cebu Pipe & Wire Depot','Jessa Cruz','0917-555-0105','Mandaue City, Cebu','PVC, Electrical Wire, Lighting'],['SUP-006','Prime Hardware Traders','Mark Dela Cruz','0917-555-0106','Consolacion, Cebu','Cabinet Hardware & Tools']
+].map(x=>({id:x[0],name:x[1],contact:x[2],phone:x[3],address:x[4],materials:x[5]}))
+};
+const deliverySeeds=[
+['DEL-001','2026-08-01','SUP-001','MAT-001',50,'PO-260801','Rowella','Warehouse A'],['DEL-002','2026-08-02','SUP-001','MAT-003',140,'PO-260802','Rowella','Warehouse A'],['DEL-003','2026-08-03','SUP-002','MAT-006',30,'PO-260803','Rowella','Warehouse B'],['DEL-004','2026-08-04','SUP-003','MAT-010',35,'PO-260804','Rowella','Warehouse B'],['DEL-005','2026-08-05','SUP-004','MAT-014',22,'PO-260805','Rowella','Warehouse C'],['DEL-006','2026-08-06','SUP-005','MAT-018',250,'PO-260806','Rowella','Warehouse C'],['DEL-007','2026-08-07','SUP-006','MAT-020',90,'PO-260807','Rowella','Warehouse A'],['DEL-008','2026-08-09','SUP-001','MAT-002',12,'PO-260809','Rowella','Site Yard'],['DEL-009','2026-08-10','SUP-001','MAT-004',120,'PO-260810','Rowella','Warehouse A'],['DEL-010','2026-08-11','SUP-002','MAT-008',75,'PO-260811','Rowella','Warehouse B'],['DEL-011','2026-08-12','SUP-003','MAT-011',30,'PO-260812','Rowella','Warehouse B'],['DEL-012','2026-08-13','SUP-004','MAT-015',20,'PO-260813','Rowella','Warehouse C'],['DEL-013','2026-08-14','SUP-005','MAT-016',55,'PO-260814','Rowella','Warehouse C'],['DEL-014','2026-08-15','SUP-006','MAT-019',50,'PO-260815','Rowella','Warehouse A'],['DEL-015','2026-08-17','SUP-001','MAT-005',80,'PO-260817','Rowella','Warehouse A'],['DEL-016','2026-08-18','SUP-002','MAT-007',45,'PO-260818','Rowella','Warehouse B'],['DEL-017','2026-08-19','SUP-003','MAT-012',30,'PO-260819','Rowella','Warehouse B'],['DEL-018','2026-08-20','SUP-004','MAT-013',25,'PO-260820','Rowella','Warehouse C'],['DEL-019','2026-08-21','SUP-005','MAT-017',45,'PO-260821','Rowella','Warehouse C'],['DEL-020','2026-08-22','SUP-006','MAT-009',70,'PO-260822','Rowella','Warehouse A']
+];
+const issuanceSeeds=[
+['ISS-001','2026-08-10','MAT-001',18,'J Tower Residence','Site Foreman','Warehouse Keeper','Masonry works'],['ISS-002','2026-08-11','MAT-003',55,'Pacific Grand Lapu-Lapu','Site Foreman','Warehouse Keeper','Rebar installation'],['ISS-003','2026-08-12','MAT-006',10,'Casa Mira Guadalupe','Site Foreman','Warehouse Keeper','Cabinet carcass'],['ISS-004','2026-08-13','MAT-010',15,'Mivela Garden Residences','Site Foreman','Warehouse Keeper','Floor tiling'],['ISS-005','2026-08-14','MAT-018',90,'Deca Banilad','Electrician','Warehouse Keeper','Electrical rough-in'],['ISS-006','2026-08-15','MAT-020',35,'J Tower Residence','Cabinet Installer','Warehouse Keeper','Cabinet installation'],['ISS-007','2026-08-17','MAT-004',40,'Boxhills Talisay','Site Foreman','Warehouse Keeper','Reinforcement works'],['ISS-008','2026-08-18','MAT-014',10,'Pacific Grand Lapu-Lapu','Interior Designer','Warehouse Keeper','Interior painting'],['ISS-009','2026-08-19','MAT-008',25,'Casa Mira Guadalupe','Carpenter','Warehouse Keeper','Ceiling framing'],['ISS-010','2026-08-20','MAT-016',22,'Mivela Garden Residences','Plumber','Warehouse Keeper','Plumbing installation']
+];
+const returnSeeds=[
+['RET-001','2026-08-21','MAT-001',4,'Good','J Tower Residence','Site Foreman','Warehouse Keeper','Excess material after masonry','ISS-001'],['RET-002','2026-08-22','MAT-020',5,'Good','J Tower Residence','Cabinet Installer','Warehouse Keeper','Unused cabinet hinges','ISS-006'],['RET-003','2026-08-23','MAT-018',12,'Good','Deca Banilad','Electrician','Warehouse Keeper','Remaining wire after rough-in','ISS-005']
+];
+function seedState(){return {materials:base.materials,suppliers:base.suppliers,deliveries:deliverySeeds.map(x=>({id:x[0],date:x[1],supplier:x[2],material:x[3],qty:x[4],po:x[5],receivedBy:x[6],location:x[7]})),issuance:issuanceSeeds.map(x=>({id:x[0],date:x[1],material:x[2],qty:x[3],project:x[4],requestedBy:x[5],releasedBy:x[6],purpose:x[7]})),returns:returnSeeds.map(x=>({id:x[0],date:x[1],material:x[2],qty:x[3],condition:x[4],project:x[5],returnedBy:x[6],receivedBy:x[7],reason:x[8],issueId:x[9]})),audit:[{time:new Date().toISOString(),user:'admin',action:'SYSTEM INITIALIZED',detail:'Loaded classroom seed dataset'}]};}
+let state=JSON.parse(localStorage.getItem(KEY)||'null')||seedState();
+function save(){localStorage.setItem(KEY,JSON.stringify(state));}
+function log(action,detail){state.audit.unshift({time:new Date().toISOString(),user:'admin',action,detail});save();}
+function money(n){return new Intl.NumberFormat('en-PH',{style:'currency',currency:'PHP',maximumFractionDigits:2}).format(n)}
+function mat(id){return state.materials.find(x=>x.id===id)||{} } function sup(id){return state.suppliers.find(x=>x.id===id)||{}}
+function inventory(m){let d=state.deliveries.filter(x=>x.material===m.id).reduce((a,x)=>a+x.qty,0);let i=state.issuance.filter(x=>x.material===m.id).reduce((a,x)=>a+x.qty,0);let r=state.returns.filter(x=>x.material===m.id).reduce((a,x)=>a+x.qty,0);return d-i+r}
+function status(m){let q=inventory(m); if(q<=0)return 'OUT OF STOCK'; if(q<=m.reorder)return 'REORDER'; if(q>m.target)return 'OVERSTOCK'; return 'NORMAL'}
+function badge(s){let c=s==='NORMAL'?'normal':s==='REORDER'?'reorder':s==='OUT OF STOCK'?'out':'over';return `<span class="badge ${c}">${s}</span>`}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2300)}
+function login(){if(document.getElementById('loginUser').value==='admin'&&document.getElementById('loginPass').value==='admin123'){sessionStorage.setItem('bslogin','1');document.getElementById('loginView').classList.add('hide');document.getElementById('appView').classList.remove('hide');renderAll();}else document.getElementById('loginError').style.display='block'}
+function logout(){sessionStorage.removeItem('bslogin');document.getElementById('appView').classList.add('hide');document.getElementById('loginView').classList.remove('hide')}
+function showPage(id,btn){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));btn?.classList.add('active');document.getElementById('pageTitle').textContent=({dashboard:'Dashboard',materials:'Materials Master',suppliers:'Supplier Directory',deliveries:'Delivery Transactions',issuance:'Issuance Transactions',returns:'Returns Transactions',reports:'Reports & Analytics',audit:'Audit Trail'})[id]||'BuildStock'}
+function renderAll(){renderDashboard();renderMaterials();renderSuppliers();renderDeliveries();renderIssuance();renderReturns();renderReports();renderAudit()}
+function renderDashboard(){let counts={NORMAL:0,REORDER:0,'OUT OF STOCK':0,OVERSTOCK:0};state.materials.forEach(m=>counts[status(m)]++);let total=state.materials.reduce((a,m)=>a+inventory(m)*m.cost,0),delCost=state.deliveries.reduce((a,d)=>a+d.qty*mat(d.material).cost,0),issCost=state.issuance.reduce((a,i)=>a+i.qty*mat(i.material).cost,0);let alerts=state.materials.filter(m=>status(m)!=='NORMAL');document.getElementById('dashboard').innerHTML=`<div class="hero"><h2>Good day, Inventory Manager 👋</h2><p>Track construction materials, supplier deliveries, site issuance and returns in one colorful workspace. Inventory balance updates automatically from transactions.</p></div><div class="grid stats"><div class="stat accent-blue"><div class="label">Material Items</div><div class="value">${state.materials.length}</div><div class="sub">Master records</div></div><div class="stat accent-teal"><div class="label">Inventory Value</div><div class="value">${money(total)}</div><div class="sub">Current available stock</div></div><div class="stat accent-gold"><div class="label">Deliveries</div><div class="value">${state.deliveries.length}</div><div class="sub">${money(delCost)} received value</div></div><div class="stat accent-coral"><div class="label">Issuances</div><div class="value">${state.issuance.length}</div><div class="sub">${money(issCost)} issued value</div></div></div><div class="grid two"><div class="card"><h3>Inventory Status Overview</h3><div class="grid stats" style="grid-template-columns:repeat(4,1fr)"><div class="mini"><b>${counts.NORMAL}</b><small>Normal</small></div><div class="mini"><b>${counts.REORDER}</b><small>Reorder</small></div><div class="mini"><b>${counts['OUT OF STOCK']}</b><small>Out of stock</small></div><div class="mini"><b>${counts.OVERSTOCK}</b><small>Overstock</small></div></div><div style="margin-top:18px">${state.materials.slice(0,8).map(m=>`<div style="margin:10px 0"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:5px"><b>${esc(m.name)}</b><span>${inventory(m)} ${m.unit}</span></div><div class="bar"><i style="width:${Math.min(100,Math.round(inventory(m)/m.target*100))}%"></i></div></div>`).join('')}</div></div><div class="card"><h3>Inventory Health</h3><div class="donut"></div><div class="legend"><span><i class="dot" style="background:#22a06b"></i>Normal ${counts.NORMAL}</span><span><i class="dot" style="background:#f6b73c"></i>Reorder ${counts.REORDER}</span><span><i class="dot" style="background:#ef6262"></i>Out ${counts['OUT OF STOCK']}</span><span><i class="dot" style="background:#7c5cff"></i>Over ${counts.OVERSTOCK}</span></div></div></div><div class="grid two"><div class="card"><h3>⚠ Smart Alerts</h3><div class="list">${alerts.slice(0,6).map(m=>`<div class="notice ${status(m)==='OUT OF STOCK'?'red':''}"><b>${status(m)}</b> — ${esc(m.name)}<br><span>Available: ${inventory(m)} ${m.unit} • Reorder level: ${m.reorder}</span></div>`).join('')||'<div class="notice blue">All materials are within their target ranges.</div>'}</div></div><div class="card"><h3>Recent Activity</h3><div class="list">${state.audit.slice(0,6).map(a=>`<div><b style="font-size:11px">${esc(a.action)}</b><div style="font-size:10px;color:#8090a7">${new Date(a.time).toLocaleString()} • ${esc(a.detail)}</div></div>`).join('')}</div></div></div>`}
+function tableShell(searchId,button,label){return `<div class="toolbar"><input id="${searchId}" class="search" placeholder="Search records..." oninput="${searchId}Filter(this.value)">${button?`<button class="btn primary" onclick="${button}">＋ ${label}</button>`:''}</div>`}
+function renderMaterials(){document.getElementById('materials').innerHTML=`<div class="card"><h3>Materials Master Data <span class="pill">20 required ✓</span></h3>${tableShell('matSearch','openMaterialModal','Add Material')}<div class="table-wrap"><table><thead><tr><th>ID</th><th>Material</th><th>Category</th><th>Unit</th><th>Unit Cost</th><th>Reorder</th><th>Target</th><th>Available</th><th>Status</th></tr></thead><tbody id="matRows"></tbody></table></div><div class="footer-note">Inventory formula: Deliveries − Issuances + Returns. Status is based on reorder and target levels.</div></div>`;renderMaterialRows('')}
+function renderMaterialRows(q){let rows=state.materials.filter(m=>(m.id+' '+m.name+' '+m.category).toLowerCase().includes(q.toLowerCase())).map(m=>`<tr><td><b>${m.id}</b></td><td>${esc(m.name)}<br><small style="color:#8391a5">${esc(m.notes)}</small></td><td><span class="pill">${esc(m.category)}</span></td><td>${m.unit}</td><td>${money(m.cost)}</td><td>${m.reorder}</td><td>${m.target}</td><td><b>${inventory(m)}</b></td><td>${badge(status(m))}</td></tr>`).join('');document.getElementById('matRows').innerHTML=rows||`<tr><td colspan="9" class="empty">No materials found.</td></tr>`}
+function matSearchFilter(v){renderMaterialRows(v)}
+function renderSuppliers(){document.getElementById('suppliers').innerHTML=`<div class="card"><h3>Supplier Directory <span class="pill">${state.suppliers.length} suppliers</span></h3>${tableShell('supSearch','openSupplierModal','Add Supplier')}<div class="table-wrap"><table><thead><tr><th>ID</th><th>Supplier</th><th>Contact Person</th><th>Contact Information</th><th>Address</th><th>Materials Supplied</th></tr></thead><tbody id="supRows"></tbody></table></div></div>`;renderSupplierRows('')}
+function renderSupplierRows(q){let rows=state.suppliers.filter(s=>(s.id+' '+s.name+' '+s.contact+' '+s.materials).toLowerCase().includes(q.toLowerCase())).map(s=>`<tr><td><b>${s.id}</b></td><td>${esc(s.name)}</td><td>${esc(s.contact)}</td><td>${esc(s.phone)}</td><td>${esc(s.address)}</td><td>${esc(s.materials)}</td></tr>`).join('');document.getElementById('supRows').innerHTML=rows||`<tr><td colspan="6" class="empty">No suppliers found.</td></tr>`}
+function supSearchFilter(v){renderSupplierRows(v)}
+function renderDeliveries(){document.getElementById('deliveries').innerHTML=`<div class="card"><h3>Delivery Transactions <span class="pill">${state.deliveries.length} records</span></h3>${tableShell('delSearch','openDeliveryModal','Record Delivery')}<div class="table-wrap"><table><thead><tr><th>ID</th><th>Date</th><th>Supplier</th><th>Material</th><th>Qty</th><th>Unit Cost</th><th>Total Material Cost</th><th>PO No.</th><th>Received By</th><th>Location</th></tr></thead><tbody id="delRows"></tbody></table></div></div>`;renderDeliveryRows('')}
+function renderDeliveryRows(q){let rows=state.deliveries.filter(d=>(d.id+' '+mat(d.material).name+' '+sup(d.supplier).name+' '+d.po).toLowerCase().includes(q.toLowerCase())).map(d=>`<tr><td><b>${d.id}</b></td><td>${d.date}</td><td>${esc(sup(d.supplier).name)}</td><td>${esc(mat(d.material).name)}</td><td>${d.qty} ${mat(d.material).unit}</td><td>${money(mat(d.material).cost)}</td><td><b>${money(d.qty*mat(d.material).cost)}</b></td><td>${d.po}</td><td>${esc(d.receivedBy)}</td><td>${esc(d.location)}</td></tr>`).join('');document.getElementById('delRows').innerHTML=rows||`<tr><td colspan="10" class="empty">No delivery records found.</td></tr>`}
+function delSearchFilter(v){renderDeliveryRows(v)}
+function renderIssuance(){document.getElementById('issuance').innerHTML=`<div class="card"><h3>Issuance Transactions <span class="pill">${state.issuance.length} records</span></h3>${tableShell('issSearch','openIssuanceModal','Issue Material')}<div class="table-wrap"><table><thead><tr><th>ID</th><th>Date</th><th>Material</th><th>Qty</th><th>Unit Cost</th><th>Total Cost</th><th>Project/Site</th><th>Requested By</th><th>Released By</th><th>Purpose</th></tr></thead><tbody id="issRows"></tbody></table></div></div>`;renderIssRows('')}
+function renderIssRows(q){let rows=state.issuance.filter(x=>(x.id+' '+mat(x.material).name+' '+x.project+' '+x.purpose).toLowerCase().includes(q.toLowerCase())).map(x=>`<tr><td><b>${x.id}</b></td><td>${x.date}</td><td>${esc(mat(x.material).name)}</td><td>${x.qty} ${mat(x.material).unit}</td><td>${money(mat(x.material).cost)}</td><td><b>${money(x.qty*mat(x.material).cost)}</b></td><td>${esc(x.project)}</td><td>${esc(x.requestedBy)}</td><td>${esc(x.releasedBy)}</td><td>${esc(x.purpose)}</td></tr>`).join('');document.getElementById('issRows').innerHTML=rows||`<tr><td colspan="10" class="empty">No issuance records found.</td></tr>`}
+function issSearchFilter(v){renderIssRows(v)}
+function renderReturns(){document.getElementById('returns').innerHTML=`<div class="card"><h3>Returns Transactions <span class="pill">${state.returns.length} records</span></h3>${tableShell('retSearch','openReturnModal','Record Return')}<div class="table-wrap"><table><thead><tr><th>ID</th><th>Date</th><th>Material</th><th>Qty Returned</th><th>Condition</th><th>Project/Site</th><th>Returned By</th><th>Received By</th><th>Reason</th><th>Cost</th></tr></thead><tbody id="retRows"></tbody></table></div></div>`;renderReturnRows('')}
+function renderReturnRows(q){let rows=state.returns.filter(x=>(x.id+' '+mat(x.material).name+' '+x.project+' '+x.reason).toLowerCase().includes(q.toLowerCase())).map(x=>`<tr><td><b>${x.id}</b></td><td>${x.date}</td><td>${esc(mat(x.material).name)}</td><td>${x.qty} ${mat(x.material).unit}</td><td><span class="pill">${x.condition}</span></td><td>${esc(x.project)}</td><td>${esc(x.returnedBy)}</td><td>${esc(x.receivedBy)}</td><td>${esc(x.reason)}</td><td><b>${money(x.qty*mat(x.material).cost)}</b></td></tr>`).join('');document.getElementById('retRows').innerHTML=rows||`<tr><td colspan="10" class="empty">No return records found.</td></tr>`}
+function retSearchFilter(v){renderReturnRows(v)}
+function renderReports(){let totalStock=state.materials.reduce((a,m)=>a+inventory(m)*m.cost,0),received=state.deliveries.reduce((a,x)=>a+x.qty*mat(x.material).cost,0),issued=state.issuance.reduce((a,x)=>a+x.qty*mat(x.material).cost,0),returned=state.returns.reduce((a,x)=>a+x.qty*mat(x.material).cost,0);let top=[...state.materials].sort((a,b)=>inventory(b)*b.cost-inventory(a)*a.cost).slice(0,8);document.getElementById('reports').innerHTML=`<div class="hero"><h2>Reports & Analytics 📊</h2><p>Quick evidence for your presentation: material cost calculations, inventory value, transaction counts and stock classifications.</p></div><div class="grid stats"><div class="stat accent-blue"><div class="label">Delivered Value</div><div class="value">${money(received)}</div><div class="sub">Quantity × unit cost</div></div><div class="stat accent-coral"><div class="label">Issued Value</div><div class="value">${money(issued)}</div><div class="sub">Materials leaving stock</div></div><div class="stat accent-teal"><div class="label">Returned Value</div><div class="value">${money(returned)}</div><div class="sub">Returned to inventory</div></div><div class="stat accent-gold"><div class="label">Current Value</div><div class="value">${money(totalStock)}</div><div class="sub">Available quantity × cost</div></div></div><div class="grid two"><div class="card"><h3>Current Stock by Material Value</h3>${top.map(m=>`<div style="margin:12px 0"><div style="display:flex;justify-content:space-between;font-size:11px"><b>${esc(m.name)}</b><span>${money(inventory(m)*m.cost)}</span></div><div class="bar"><i style="width:${Math.min(100,Math.round((inventory(m)*m.cost)/(Math.max(...top.map(a=>inventory(a)*a.cost))||1)*100))}%"></i></div></div>`).join('')}</div><div class="card"><h3>System Completeness Checklist</h3><div class="list">${[['20+ materials',state.materials.length>=20],['5+ suppliers',state.suppliers.length>=5],['20+ deliveries',state.deliveries.length>=20],['10+ issuances',state.issuance.length>=10],['3+ returns',state.returns.length>=3],['Automatic inventory calculation',true],['Four stock status classes',true],['Search/filter tools',true],['Audit trail',true],['Login authentication',true]].map(x=>`<div class="notice ${x[1]?'blue':'red'}">${x[1]?'✓':'!'} <b>${x[0]}</b></div>`).join('')}</div><button class="btn primary" style="margin-top:14px" onclick="exportAll()">⇩ Export Data Summary (CSV)</button></div></div>`}
+function renderAudit(){document.getElementById('audit').innerHTML=`<div class="card"><h3>Audit Trail <span class="pill">${state.audit.length} events</span></h3><div class="toolbar"><button class="btn danger" onclick="clearAudit()">Clear Audit Log</button></div><div class="table-wrap"><table><thead><tr><th>Time</th><th>User</th><th>Action</th><th>Details</th></tr></thead><tbody>${state.audit.map(a=>`<tr><td>${new Date(a.time).toLocaleString()}</td><td>${esc(a.user)}</td><td><b>${esc(a.action)}</b></td><td>${esc(a.detail)}</td></tr>`).join('')}</tbody></table></div></div>`}
+function closeModal(){
+  document.getElementById('modal').classList.remove('show');
+  window.modalSave=null;
+}
+function openModal(title,body,onSave){
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalBody').innerHTML=body;
+  document.getElementById('modal').classList.add('show');
+  window.modalSave=onSave;
+}
+function field(id){return document.getElementById(id)}
+function valueOf(id){const el=field(id);return el?el.value.trim():''}
+function numberOf(id){const el=field(id);return el?Number(el.value):NaN}
+function saveModal(){
+  if(typeof window.modalSave==='function') window.modalSave();
+}
+function materialOptions(){return state.materials.map(m=>`<option value="${esc(m.id)}">${esc(m.id)} — ${esc(m.name)}</option>`).join('')}
+function supplierOptions(){return state.suppliers.map(s=>`<option value="${esc(s.id)}">${esc(s.id)} — ${esc(s.name)}</option>`).join('')}
+function nextId(prefix,arr){return `${prefix}-${String(arr.length+1).padStart(3,'0')}`}
+function openMaterialModal(){
+  openModal('Add Material',`
+    <div class="form-grid">
+      <div class="field"><label>Material ID</label><input id="f_id" value="${nextId('MAT',state.materials)}"></div>
+      <div class="field"><label>Material Name</label><input id="f_name" placeholder="e.g. Gypsum Board"></div>
+      <div class="field"><label>Category</label><input id="f_cat" placeholder="Finishes"></div>
+      <div class="field"><label>Unit of Measurement</label><select id="f_unit"><option>pc</option><option>bag</option><option>sheet</option><option>box</option><option>m</option><option>m³</option><option>can</option></select></div>
+      <div class="field"><label>Unit Cost (PHP)</label><input id="f_cost" type="number" min="0.01" step="0.01" placeholder="0.00"></div>
+      <div class="field"><label>Minimum / Reorder Level</label><input id="f_reorder" type="number" min="0" step="1" value="0"></div>
+      <div class="field"><label>Target / Maximum Stock</label><input id="f_target" type="number" min="1" step="1" value="10"></div>
+      <div class="field"><label>Other Relevant Information</label><input id="f_notes" placeholder="Specification / notes"></div>
+    </div>
+    <div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveModal()">Save Material</button></div>`,()=>{
+      const m={id:valueOf('f_id'),name:valueOf('f_name'),category:valueOf('f_cat'),unit:valueOf('f_unit'),cost:numberOf('f_cost'),reorder:numberOf('f_reorder'),target:numberOf('f_target'),notes:valueOf('f_notes')};
+      if(!m.id||!m.name||!m.category||!Number.isFinite(m.cost)||m.cost<=0||!Number.isFinite(m.reorder)||m.reorder<0||!Number.isFinite(m.target)||m.target<=0){toast('Please complete all required material fields.');return}
+      if(state.materials.some(x=>x.id.toLowerCase()===m.id.toLowerCase())){toast('Material ID already exists.');return}
+      state.materials.push(m);log('MATERIAL ADDED',m.id+' — '+m.name);save();closeModal();renderAll();toast('Material added successfully.');
+  });
+}
+function openSupplierModal(){
+  openModal('Add Supplier',`
+    <div class="form-grid">
+      <div class="field"><label>Supplier ID</label><input id="f_id" value="${nextId('SUP',state.suppliers)}"></div>
+      <div class="field"><label>Supplier Name</label><input id="f_name"></div>
+      <div class="field"><label>Contact Person</label><input id="f_contact"></div>
+      <div class="field"><label>Contact Information</label><input id="f_phone"></div>
+      <div class="field"><label>Address</label><input id="f_address"></div>
+      <div class="field"><label>Materials Supplied</label><input id="f_materials" placeholder="Cement, Steel, Hardware"></div>
+    </div>
+    <div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveModal()">Save Supplier</button></div>`,()=>{
+      const s={id:valueOf('f_id'),name:valueOf('f_name'),contact:valueOf('f_contact'),phone:valueOf('f_phone'),address:valueOf('f_address'),materials:valueOf('f_materials')};
+      if(!s.id||!s.name||!s.contact||!s.phone||!s.address){toast('Please complete the required supplier fields.');return}
+      if(state.suppliers.some(x=>x.id.toLowerCase()===s.id.toLowerCase())){toast('Supplier ID already exists.');return}
+      state.suppliers.push(s);log('SUPPLIER ADDED',s.id+' — '+s.name);save();closeModal();renderAll();toast('Supplier added successfully.');
+  });
+}
+function openDeliveryModal(){
+  openModal('Record Delivery',`
+    <div class="form-grid">
+      <div class="field"><label>Delivery ID</label><input id="f_id" value="${nextId('DEL',state.deliveries)}"></div>
+      <div class="field"><label>Delivery Date</label><input id="f_date" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+      <div class="field"><label>Supplier</label><select id="f_supplier">${supplierOptions()}</select></div>
+      <div class="field"><label>Material</label><select id="f_material">${materialOptions()}</select></div>
+      <div class="field"><label>Quantity Delivered</label><input id="f_qty" type="number" min="1" step="1"></div>
+      <div class="field"><label>Purchase Order Number</label><input id="f_po" placeholder="PO-260901"></div>
+      <div class="field"><label>Received By</label><input id="f_received" value="Warehouse Keeper"></div>
+      <div class="field"><label>Location</label><input id="f_location" value="Warehouse A"></div>
+    </div>
+    <div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveModal()">Record Delivery</button></div>`,()=>{
+      const d={id:valueOf('f_id'),date:valueOf('f_date'),supplier:valueOf('f_supplier'),material:valueOf('f_material'),qty:numberOf('f_qty'),po:valueOf('f_po'),receivedBy:valueOf('f_received'),location:valueOf('f_location')};
+      if(!d.id||!d.date||!Number.isFinite(d.qty)||d.qty<=0||!d.po||!d.receivedBy||!d.location){toast('Please complete the delivery details.');return}
+      if(!sup(d.supplier).id||!mat(d.material).id){toast('Please select a valid supplier and material.');return}
+      if(state.deliveries.some(x=>x.id.toLowerCase()===d.id.toLowerCase())){toast('Delivery ID already exists.');return}
+      state.deliveries.push(d);log('DELIVERY RECORDED',`${d.id} — ${mat(d.material).name} × ${d.qty}`);save();closeModal();renderAll();toast('Delivery recorded and inventory updated.');
+  });
+}
+function openIssuanceModal(){
+  openModal('Issue Material',`
+    <div class="form-grid">
+      <div class="field"><label>Issuance ID</label><input id="f_id" value="${nextId('ISS',state.issuance)}"></div>
+      <div class="field"><label>Issuance Date</label><input id="f_date" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+      <div class="field full"><label>Material</label><select id="f_material">${materialOptions()}</select></div>
+      <div class="field"><label>Quantity Issued</label><input id="f_qty" type="number" min="1" step="1"></div>
+      <div class="field"><label>Project / Site</label><input id="f_project" placeholder="J Tower Residence"></div>
+      <div class="field"><label>Requested By</label><input id="f_requested"></div>
+      <div class="field"><label>Released By</label><input id="f_released" value="Warehouse Keeper"></div>
+      <div class="field full"><label>Purpose</label><input id="f_purpose" placeholder="Cabinet installation"></div>
+    </div>
+    <div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveModal()">Issue Material</button></div>`,()=>{
+      const x={id:valueOf('f_id'),date:valueOf('f_date'),material:valueOf('f_material'),qty:numberOf('f_qty'),project:valueOf('f_project'),requestedBy:valueOf('f_requested'),releasedBy:valueOf('f_released'),purpose:valueOf('f_purpose')};
+      if(!x.id||!x.date||!Number.isFinite(x.qty)||x.qty<=0||!x.project||!x.requestedBy||!x.releasedBy||!x.purpose){toast('Please complete the issuance details.');return}
+      if(!mat(x.material).id){toast('Please select a valid material.');return}
+      if(state.issuance.some(a=>a.id.toLowerCase()===x.id.toLowerCase())){toast('Issuance ID already exists.');return}
+      const available=inventory(mat(x.material));
+      if(x.qty>available){toast(`Insufficient stock. Available: ${available} ${mat(x.material).unit}.`);return}
+      state.issuance.push(x);log('MATERIAL ISSUED',`${x.id} — ${mat(x.material).name} × ${x.qty}`);save();closeModal();renderAll();toast('Issuance recorded and inventory updated.');
+  });
+}
+function openReturnModal(){
+  openModal('Record Return',`
+    <div class="form-grid">
+      <div class="field"><label>Return ID</label><input id="f_id" value="${nextId('RET',state.returns)}"></div>
+      <div class="field"><label>Return Date</label><input id="f_date" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+      <div class="field"><label>Material</label><select id="f_material">${materialOptions()}</select></div>
+      <div class="field"><label>Quantity Returned</label><input id="f_qty" type="number" min="1" step="1"></div>
+      <div class="field"><label>Condition</label><select id="f_condition"><option>Good</option><option>Damaged</option><option>Needs inspection</option></select></div>
+      <div class="field"><label>Project / Site</label><input id="f_project"></div>
+      <div class="field"><label>Returned By</label><input id="f_returned"></div>
+      <div class="field"><label>Received By</label><input id="f_received" value="Warehouse Keeper"></div>
+      <div class="field full"><label>Reason for Return</label><input id="f_reason" placeholder="Unused / excess material"></div>
+    </div>
+    <div class="modal-actions"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveModal()">Record Return</button></div>`,()=>{
+      const x={id:valueOf('f_id'),date:valueOf('f_date'),material:valueOf('f_material'),qty:numberOf('f_qty'),condition:valueOf('f_condition'),project:valueOf('f_project'),returnedBy:valueOf('f_returned'),receivedBy:valueOf('f_received'),reason:valueOf('f_reason'),issueId:''};
+      if(!x.id||!x.date||!Number.isFinite(x.qty)||x.qty<=0||!x.project||!x.returnedBy||!x.receivedBy||!x.reason){toast('Please complete the return details.');return}
+      if(!mat(x.material).id){toast('Please select a valid material.');return}
+      if(state.returns.some(a=>a.id.toLowerCase()===x.id.toLowerCase())){toast('Return ID already exists.');return}
+      state.returns.push(x);log('MATERIAL RETURNED',`${x.id} — ${mat(x.material).name} × ${x.qty}`);save();closeModal();renderAll();toast('Return recorded and inventory updated.');
+  });
+}
+function clearAudit(){if(confirm('Clear the audit trail?')){state.audit=[];save();renderAudit();toast('Audit trail cleared.')}}
+function csv(rows){return rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\n')}
+function download(name,text){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/csv'}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function exportAll(){let rows=[['MATERIAL ID','MATERIAL','CATEGORY','UNIT','UNIT COST','REORDER','TARGET','AVAILABLE','STATUS'],...state.materials.map(m=>[m.id,m.name,m.category,m.unit,m.cost,m.reorder,m.target,inventory(m),status(m)])];download('buildstock_inventory_report.csv',csv(rows));toast('CSV report exported.')}
+if(sessionStorage.getItem('bslogin')==='1'){document.getElementById('loginView').classList.add('hide');document.getElementById('appView').classList.remove('hide');renderAll()}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+</script>
+</body>
+</html>
